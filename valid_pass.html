@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>	
+	<head>
+		<title>Valida Password</title>
+		
+		<style>
+			#contenedor1 {
+				font-family:Helvetica;
+				margin:0 auto;
+				padding-bottom:6px;
+				background:#F9E8E0;
+				width:550px;
+				border-radius: 4px;
+			}
+			
+			#contenedor2 {
+				text-align:left;
+				margin:0 auto;
+				margin-bottom:10px;
+				padding:10px;
+				background:#fff;
+				width:450px;
+				border-radius: 4px;				
+			}
+			
+			#contenedorCriterios {
+				display:none;
+			  background: #f1f1f1;
+			  color:#646565;;
+			  position: relative;
+			  padding: 6px;
+			  margin-top: 10px;
+			}
+
+			#contenedorCriterios p {
+			  padding: 0px 35px;
+			  font-size: 14px;
+			}
+			
+			.contenedorForm {
+			  background-color: #f1f1f1;
+			  padding: 20px;
+			  border-radius: 4px;
+			}
+			
+			#contenedorTitulo { 
+				color:#474848;				
+			}
+  
+			.titulo1 {
+				width:100%;
+				text-align: center;
+				color:#2D5757;
+				float:left;
+				font-weight: bold; 
+			}
+			
+			.titulo3 {
+				width:100%;
+				text-align: center;
+				color:#2D5757;
+				float:left; 
+			}  
+			
+			.etiqueta{
+				font-weight: bold; 
+				color:#646565;
+				float:left; 
+			}  
+			
+			.msgln { 
+				margin:0 0 2px 0; 			
+			}
+			
+			
+			input {
+			  width: 100%;
+			  padding: 12px;
+			  border: 1px solid #ccc;
+			  border-radius: 4px;
+			  box-sizing: border-box;
+			  margin-top: 6px;
+			  margin-bottom: 6px;
+			  
+			}
+
+			
+			input[type=submit] {	
+				color: white;
+			}	
+
+			.inputDisabled{
+				background-color: #B3B1AE;
+			}
+			
+			.inputEnabled{
+				background-color: #F7834B;
+			}
+			
+			.valid {
+			  color: green;
+			}
+
+			.valid:before {
+			  position: relative;
+			  left: -35px;			  
+			}
+
+			.invalid {
+			  color: red;
+			}
+
+			.invalid:before {
+			  position: relative;
+			  left: -35px;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="contenedor1">
+			<div id="contenedorTitulo">
+				<p class="titulo1">Aplicaciones Webb</p>
+				<p class="titulo3">Proyect 1 (2021) - Valida Password (HTML-CSS-JS)</p>
+				<div style="clear:both"></div>
+				
+			</div>
+			<div id="contenedor2">
+				<div class="contenedorForm">
+				  <form  >
+					<label class="etiqueta">Password</label>
+					<input  type="password" id="psw" name="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+
+					<input id="submit" type="submit" value="Entrar" onclick="alert('FELICITACIONES !!! Su password cumple los criterios');">
+				  </form>
+				</div>
+
+				<div id="contenedorCriterios">
+				  <h5>La Password debe cumplir estos criterios:</h3>
+				  <p id="minusculaPw" >Caracteres literales en <b>minuscula</b> </p>
+				  <p id="mayusculaPw" >Al menos un caracter literal en <b>mayuscula</b> </p>
+				  <p id="digitoPw" >Al menos un caracter <b>numerico</b></p>
+				  <p id="largoPw" >Al menos <b>8 caracteres</b></p>
+				</div>
+			</div>	     
+		</div>
+	
+		<script>
+		
+			var myInput = document.getElementById("psw");
+			var submit = document.getElementById("submit");
+			var minusculaPw = document.getElementById("minusculaPw");
+			var mayusculaPw = document.getElementById("mayusculaPw");
+			var digitoPw = document.getElementById("digitoPw");
+			var largoPw = document.getElementById("largoPw");
+			
+		
+			// Cuando el usuario hace clic en la caja de texto se muestra el contenedor con los criterios a cumplir 
+			// para la password
+			myInput.onfocus = function() {
+				document.getElementById("contenedorCriterios").style.display = "block";
+			}
+
+			// Cuando la caja de etxto pierde el foco se esconde el contenedo con los criterios
+			myInput.onblur = function() {
+				document.getElementById("contenedorCriterios").style.display = "none";
+				minusculaPw.classList.remove("invalid");
+				minusculaPw.classList.remove("valid");				
+				mayusculaPw.classList.remove("invalid");
+				mayusculaPw.classList.remove("valid");
+				digitoPw.classList.remove("invalid");
+				digitoPw.classList.remove("valid");
+				largoPw.classList.remove("invalid");
+				largoPw.classList.remove("valid");
+			}
+
+			// Sobre escribo el evento onkeyup para ir chequeando los criteros de la pasword mientras en usuario va escribiendo la misma
+			myInput.onkeyup = function() {
+			
+				// Valido existan caracteres en minuscula
+				var lowerCaseLetters = /[a-z]/g;
+				if(myInput.value.match(lowerCaseLetters)) {
+					minusculaPw.classList.remove("invalid");
+					minusculaPw.classList.add("valid");
+				} else {
+					minusculaPw.classList.remove("valid");
+					minusculaPw.classList.add("invalid");
+				}
+
+				// Vakido existan caracteres en mayúscula
+				var upperCaseLetters = /[A-Z]/g;
+				if(myInput.value.match(upperCaseLetters)) {
+					mayusculaPw.classList.remove("invalid");
+					mayusculaPw.classList.add("valid");
+				} else {
+					mayusculaPw.classList.remove("valid");
+					mayusculaPw.classList.add("invalid");
+				}
+
+				// Valido existan caracteres numericos
+				var numbers = /[0-9]/g;
+				if(myInput.value.match(numbers)) {
+					digitoPw.classList.remove("invalid");
+					digitoPw.classList.add("valid");
+				} else {
+					digitoPw.classList.remove("valid");
+					digitoPw.classList.add("invalid");
+				}
+
+				// Valido la longitud de la password
+				if(myInput.value.length >= 8) {
+					largoPw.classList.remove("invalid");
+					largoPw.classList.add("valid");
+				} else {
+					largoPw.classList.remove("valid");
+					largoPw.classList.add("invalid");
+				}
+			  
+				// Por ultimo chequeo si se cumplen todos los riterios y habilito el boton del tipo submit si corresponde
+				if (largoPw.classList[0] == "valid" && digitoPw.classList[0] == "valid" && mayusculaPw.classList[0] == "valid" && minusculaPw.classList[0] == "valid"){
+					submit.disabled = false;
+					submit.classList.remove("inputDisabled");
+					submit.classList.add("inputEnabled");
+				}else{
+					submit.disabled = true;
+					submit.classList.remove("inputEnabled");
+					submit.classList.add("inputDisabled");				
+				}
+			}
+		</script>
+	
+		
+	</body>
+</html>
